@@ -1,10 +1,15 @@
 package dw.editora.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 
@@ -28,6 +33,10 @@ public class Artigo {
     @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean publicado;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "autor_id", nullable = false)
+    @JsonIgnoreProperties("artigos")
+    private Autor autor;
     
     public Artigo() {
     }
@@ -39,7 +48,13 @@ public class Artigo {
         this.publicado = publicado;
     }
 
-    
+    public Artigo(String titulo, String resumo, boolean publicado, Autor autor) {
+        this.titulo = titulo;
+        this.resumo = resumo;
+        this.publicado = publicado;
+        this.autor = autor;
+    }
+
     public long getId() { return this.id; }
     public void setId(long id) { this.id = id; }
 
@@ -52,8 +67,11 @@ public class Artigo {
     public boolean isPublicado() { return this.publicado; }
     public void setPublicado(boolean publicado) { this.publicado = publicado; }
 
+    public Autor getAutor() { return this.autor; }
+    public void setAutor(Autor autor) { this.autor = autor; }
+
     @Override
     public String toString() {
-        return "Artigo [id=" + id + ", titulo=" + titulo + ", resumo=" + resumo + ", publicado=" + publicado + "]";
+        return "Artigo [id=" + id + ", titulo=" + titulo + ", resumo=" + resumo + ", publicado=" + publicado + ", autor=" + autor + "]";
     }
 }
