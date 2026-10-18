@@ -12,10 +12,7 @@ Copie `.env.example` para `.env` e preencha com as credenciais do seu banco. Dep
 
 ```
 set -a && source .env && set +a
-```
-
-```
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 A API sobe em `http://localhost:8000/editora`.
