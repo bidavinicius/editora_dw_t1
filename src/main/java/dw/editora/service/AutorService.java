@@ -33,7 +33,13 @@ public class AutorService {
         if (rep.findByEmail(autor.getEmail()).isPresent())
             return Optional.empty();
 
-        Autor novo = rep.save(new Autor(autor.getNome(), autor.getEmail(), autor.getBiografia()));
+        Autor novo = rep.save(new Autor(
+        autor.getNome(),
+        autor.getEmail(),
+        autor.getBiografia(),
+        autor.getNacionalidade(),
+        autor.getDataNascimento()
+        ));
         return Optional.of(novo);
     }
 

@@ -3,6 +3,7 @@ package dw.editora.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,6 +37,14 @@ public class Autor {
     @Column(columnDefinition = "TEXT")
     private String biografia;
 
+
+    @Column(length = 60)
+    private String nacionalidade;
+
+    
+    @Column(name = "data_nascimento")
+    private LocalDate dataNascimento;
+
     @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Artigo> artigos = new ArrayList<>();
@@ -44,13 +53,17 @@ public class Autor {
     }
 
     
-    public Autor(String nome, String email, String biografia) {
+    public Autor(String nome, String email, String biografia, String nacionalidade, LocalDate dataNascimento) {
         this.nome = nome;
         this.email = email;
         this.biografia = biografia;
+        this.nacionalidade = nacionalidade;
+        this.dataNascimento = dataNascimento;
+        
     }
-
     
+    
+      
     public long getId() { return this.id; }
     public void setId(long id) { this.id = id; }
 
@@ -63,11 +76,17 @@ public class Autor {
     public String getBiografia() { return this.biografia; }
     public void setBiografia(String biografia) { this.biografia = biografia; }
 
+    public String getNacionalidade() { return this.nacionalidade; }
+    public void setNacionalidade(String nacionalidade) { this.nacionalidade = nacionalidade; }
+
+    public LocalDate getDataNascimento() { return this.dataNascimento; }
+    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
+    
     public List<Artigo> getArtigos() { return this.artigos; }
     public void setArtigos(List<Artigo> artigos) { this.artigos = artigos; }
 
     @Override
     public String toString() {
-        return "Autor [id=" + id + ", nome=" + nome + ", email=" + email + ", biografia=" + biografia + "]";
+        return "Autor [id=" + id + ", nome=" + nome + ", email=" + email + ", nacionalidade=" + nacionalidade + ", dataNascimento=" + dataNascimento + "]";
     }
 }
