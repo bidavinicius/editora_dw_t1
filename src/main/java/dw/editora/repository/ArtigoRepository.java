@@ -8,4 +8,5 @@ import dw.editora.entity.Artigo;
 public interface ArtigoRepository extends JpaRepository<Artigo, Long> {
     List<Artigo> findByPublicado(Boolean publicado);
     List<Artigo> findByTituloContaining(String titulo);
+    List<Artigo> findByAutorIdAndPublicado(Long autorId, Boolean publicado);
 }

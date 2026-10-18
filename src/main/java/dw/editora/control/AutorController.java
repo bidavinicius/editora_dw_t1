@@ -1,4 +1,3 @@
-// Camada Controller do padrão MVC - endpoints REST da entidade Autor.
 package dw.editora.control;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dw.editora.entity.Artigo;
 import dw.editora.entity.Autor;
 import dw.editora.service.AutorService;
 
@@ -58,6 +58,23 @@ public class AutorController {
                 return new ResponseEntity<>(novo.get(), HttpStatus.CREATED);
             else
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{id}/artigos")
+    public ResponseEntity<List<Artigo>> getArtigosDoAutor(@PathVariable("id") long id) {
+        try {
+            Optional<List<Artigo>> artigos = service.listarArtigosPublicadosDoAutor(id);
+            if (artigos.isEmpty())
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            List<Artigo> lista = artigos.get();
+            if (lista.isEmpty())
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            return new ResponseEntity<>(lista, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

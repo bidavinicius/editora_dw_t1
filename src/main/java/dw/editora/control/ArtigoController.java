@@ -54,8 +54,11 @@ public class ArtigoController {
     @PostMapping
     public ResponseEntity<Artigo> createArtigo(@RequestBody Artigo artigo) {
         try {
-            Artigo novo = service.criar(artigo);
-            return new ResponseEntity<>(novo, HttpStatus.CREATED);
+            Optional<Artigo> novo = service.criar(artigo);
+            if (novo.isPresent())
+                return new ResponseEntity<>(novo.get(), HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
