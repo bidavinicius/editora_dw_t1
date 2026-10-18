@@ -37,6 +37,14 @@ public class AutorService {
         return Optional.of(novo);
     }
 
+    public boolean deletar(long id) {
+        if (rep.existsById(id)) {
+            rep.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
     public Optional<List<Artigo>> listarArtigosPublicadosDoAutor(long autorId) {
         if (!rep.existsById(autorId))
             return Optional.empty();
